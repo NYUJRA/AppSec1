@@ -18,9 +18,11 @@ Now, using the Ubuntu 20.04.3 LTS course virtual machine (https://drive.google.c
 ```
 cd ~
 git clone https://github.com/NYUJRA/AppSec1.git AppSec1
+cd AppSec1
 git remote remove origin
 git init
-git remote add origin https://<YourGitHubHandle>:<YourPersonalAccessToken>@github.com/<YourGitHubHandle>/AppSec1.git<NetID>-appsec1.git
+git remote add origin https://<YourGitHubHandle>:<YourPersonalAccessToken>@github.com/<YourGitHubHandle>/<NetID>-appsec1.git
+git branch -M master
 git push -u origin master
 ```
 
@@ -102,7 +104,11 @@ $ sudo sysctl -w kernel.randomize\_va\_space=0
 ```
 Configuring **/bin/sh**. In the recent versions of Ubuntu OS, the /bin/sh symbolic link points to the /bin/dash shell. The dash program, as well as bash, has implemented a security countermeasure that prevents itself from being executed in a Set-UID process. Basically, if they detect that they are executed in a Set-UID process, they will immediately change the effective user ID to the process's real user ID, essentially dropping the privilege.
 
-Since our victim program is a Set-UID program, and our attack relies on running /bin/sh, the countermeasure in /bin/dash makes our attack more difficult. Therefore, we will link /bin/sh to another shell that does not have such a countermeasure (in later tasks, we will show that with a little bit more effort, the countermeasure in /bin/dash can be easily defeated). We have installed a shell program called zsh in our Ubuntu 20.04 VM. The following command can be used to link /bin/sh to zsh:
+Since our victim program is a Set-UID program, and our attack relies on running /bin/sh, the countermeasure in /bin/dash makes our attack more difficult. Therefore, we will link /bin/sh to another shell that does not have such a countermeasure (in later tasks, we will show that with a little bit more effort, the countermeasure in /bin/dash can be easily defeated). It can be installed with the following command:
+```
+$ sudo apt install zsh
+```
+Once zsh is installed, the following command can be used to link /bin/sh to zsh:
 ```
 $ sudo ln -sf /bin/zsh /bin/sh
 ```
